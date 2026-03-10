@@ -1,6 +1,6 @@
 import React from 'react'
 import ProductCard from '../components/ProductCard'
-function Products() {
+function Products({addToCart}) {
   const products = [
     {id:1, title:"Laptop",price:50000},
     {id:2, title:"Phone",price:20000},
@@ -18,6 +18,7 @@ function Products() {
           key={product.id}
           title={product.title}
           price={product.price}
+          addToCart={addToCart}
         />
       ) )}
     </div>
