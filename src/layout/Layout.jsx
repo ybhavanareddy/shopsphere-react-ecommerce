@@ -1,9 +1,9 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-function Layout({children,cartCount}) {
+function Layout({children}) {
   return (
     <div>
-        <Navbar cartCount={cartCount} />
+        <Navbar/>
         {children}
     </div>
   )

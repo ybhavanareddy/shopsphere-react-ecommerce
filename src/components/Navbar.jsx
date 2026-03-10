@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import {CartContext} from '../context/CartContext'
 
 function Navbar() {
-    const {cartCount} = useContext(CartContext)
+    const {cartItems} = useContext(CartContext)
   return (
     <nav>
         <div>
@@ -18,7 +18,7 @@ function Navbar() {
                 <Link to="/products">Products</Link>
             </li>
             <li>
-                <Link to="/cart">Cart({cartCount})</Link>
+                <Link to="/cart">Cart({cartItems.length})</Link>
             </li>
             <li>
                 <Link to="/login">Login</Link>
