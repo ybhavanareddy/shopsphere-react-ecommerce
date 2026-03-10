@@ -1,7 +1,8 @@
 import React from 'react'
-
-function ProductCard({title,price,addToCart}) {
-  
+import { useContext } from 'react'
+import { CartContext } from '../context/CartContext'
+function ProductCard({title,price}) {
+  const { addToCart } = useContext(CartContext)
   return (
     <div>
         <h3>{title}</h3>

@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-function Navbar({cartCount}) {
+import { useContext } from 'react'
+import {CartContext} from '../context/CartContext'
+
+function Navbar() {
+    const {cartCount} = useContext(CartContext)
   return (
     <nav>
         <div>
