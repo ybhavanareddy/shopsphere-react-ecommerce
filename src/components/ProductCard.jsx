@@ -8,7 +8,7 @@ function ProductCard({id,title,price,image}) {
   const { addToCart } = useContext(CartContext)
 
   function handleAdd(){
-    const product = {id,title,price}
+    const product = {id,title,price,image}
     addToCart(product)
   }
 

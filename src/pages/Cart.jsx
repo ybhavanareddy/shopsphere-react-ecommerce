@@ -40,9 +40,17 @@ function Cart() {
               key={index}
               className='flex justify-between items-center border p-4 rounded'
             >
-              <div>
-                <h3 className="font-semibold">{item.title}</h3>
-                <p className='text-gray-600'>Price: ${item.price}</p>
+              <div className='flex items-center gap-4'>
+                <img 
+                  src={item.image}
+                  alt={item.title}
+                  className='h-16 w-16 object-contain'
+                />
+                <div>
+                  <h3 className="font-semibold">{item.title}</h3>
+                  <p className='text-gray-600'>Price: ${item.price}</p>
+                </div>
+                
               </div>
 
               <button
