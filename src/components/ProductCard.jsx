@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { CartContext } from '../context/CartContext'
 import { Link } from 'react-router-dom'
 
-function ProductCard({id,title,price}) {
+function ProductCard({id,title,price,image}) {
 
   const { addToCart } = useContext(CartContext)
 
@@ -14,7 +14,11 @@ function ProductCard({id,title,price}) {
 
   return (
     <div className='border rounded-lg p-4 shadow hover:shadow-lg transition'>
-
+        <img 
+        src={image}
+        alt={title}
+        className = "h-40 mx-auto object-contain mb-4"
+        />
         <h3 className='text-lg font-semibold mb-2'>
           <Link to={`/products/${id}`}>
           {title}

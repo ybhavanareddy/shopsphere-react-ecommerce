@@ -10,6 +10,7 @@ function ProductGrid({products}) {
                     id={product.id}
                     title={product.title}
                     price={product.price}
+                    image= {product.image}
                 />
         ))}
     

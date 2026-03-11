@@ -2,18 +2,25 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 
 import ProductGrid from '../components/ProductGrid'
-import { products } from '../services/ProductService'
+import { fetchProducts } from '../services/ProductService'
 
 function Products() {
-  const [search,setSearch] = useState("");
 
+  const [search,setSearch] = useState("");
+  const [products, setProducts] = useState([]);
   const[loading, setLoading] = useState(true);
 
+
   useEffect(()=>{
-    setTimeout(()=>{
+    async function loadProducts(){
+      const data = await fetchProducts();
+      setProducts(data);
       setLoading(false);
-    },1000);
+    }
+    loadProducts();
   },[]);
+
+
 
 
   const filteredProducts = products.filter((product)=> 
