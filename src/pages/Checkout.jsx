@@ -1,12 +1,19 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-
+import { useNavigate } from "react-router-dom";
 
 
 function Checkout() {
-    const {cartItems} = useContext(CartContext);
+    const navigate = useNavigate();
+    const {cartItems, clearCart} = useContext(CartContext);
 
     const totalPrice = cartItems.reduce((total,item) => total+item.price,0);
+
+    function handlePlaceOrder(){
+
+        clearCart();
+        navigate("/order-conformation");
+    }
 
   return (
     <div className="p-8 mx-w-xl mx-auto">
@@ -27,7 +34,9 @@ function Checkout() {
             <span>{totalPrice}</span>
         </div>
 
-        <button className="mt-6 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">Place Order</button>
+        <button 
+            onClick={handlePlaceOrder}
+            className="mt-6 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">Place Order</button>
     </div>
   )
 }

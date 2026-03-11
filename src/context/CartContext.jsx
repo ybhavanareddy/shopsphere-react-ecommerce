@@ -14,8 +14,13 @@ function CartProvider({children}){
         const updatedCart = cartItems.filter((_,i)=> i !== index);
         setCartItems(updatedCart);
     }
+
+    function clearCart(){
+        setCartItems([]);
+    }
+    
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>
     )
