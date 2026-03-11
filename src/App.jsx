@@ -8,6 +8,7 @@ import Cart from './pages/Cart'
 import Login from './pages/Login'
 import ProductDetails from './pages/ProductDetails'
 import ProtectedRoute from './components/ProtectedRoute'
+import Checkout from './pages/Checkout'
 
 import { Routes, Route } from 'react-router-dom'
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path= "/products/:id" element={<ProductDetails/>}/>
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+        <Route path="/checkout" element={<Checkout/>}/>
         <Route path="/login" element={<Login />} />
       </Routes>
     </Layout>
