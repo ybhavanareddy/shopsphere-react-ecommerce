@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-import ProductCard from '../components/ProductCard'
+import ProductGrid from '../components/ProductGrid'
 import { products } from '../services/ProductService'
 
 function Products() {
@@ -41,17 +41,7 @@ function Products() {
         className='border p-2 mb-6 w-full'
       />
 
-      <div className='grid grid-cols-3 gap-6'>
-          {filteredProducts.map(product => (
-          <ProductCard 
-            id={product.id}
-            key={product.id}
-            title={product.title}
-            price={product.price}
-
-          />
-          ))}
-      </div>
+      <ProductGrid products={filteredProducts}/>
       
     </div>
       )}
