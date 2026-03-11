@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+
+  const navigate = useNavigate();
 
   const {login} = useContext(AuthContext);
 
@@ -13,7 +15,7 @@ function Login() {
   function handleSubmit(e){
     e.preventDefault();
     login();
-    console.log("User Logged In");
+    navigate("/products");
 
   }
   return (
