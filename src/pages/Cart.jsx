@@ -20,24 +20,24 @@ function Cart() {
           {cartItems.map((item,index)=>(
 
                 <div 
-            key={index}
-            className='flex justify-between items-center border p-4 rounded'
-          >
+                  key={index}
+                  className='flex justify-between items-center border p-4 rounded'
+                >
           
-              <div>
-            <h3 className="font-semibold">{item.title}</h3>
-            <p className='text-gray-600'>Price: ${item.price}</p>
-              </div>
+                      <div>
+                          <h3 className="font-semibold">{item.title}</h3>
+                          <p className='text-gray-600'>Price: ${item.price}</p>
+                      </div>
 
-              <button 
-            onClick={()=>removeFromCart(index)}
-            className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'
-          >
-            Remove
-              </button>
+                      <button 
+                        onClick={()=>removeFromCart(index)}
+                        className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'
+                      >
+                          Remove
+                      </button>
 
                 </div>
-          ))}
+           ))}
       </div>
       
       <div className='mt-6 border-t pt-4 flex justify-between font-bold text-lg'>
