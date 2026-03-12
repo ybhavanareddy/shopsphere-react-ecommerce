@@ -7,7 +7,7 @@ function Cart() {
 
   const {cartItems, removeFromCart} = useContext(CartContext)
 
-  const totalPrice = cartItems.reduce((total,item) => total + item.price,0);
+  const totalPrice = cartItems.reduce((total,item) => total + item.price*item.quantity,0);
 
   return (
   <div className='p-8 max-w-3xl mx-auto'>
@@ -48,7 +48,7 @@ function Cart() {
                 />
                 <div>
                   <h3 className="font-semibold mb-1">{item.title}</h3>
-                  <p className='text-gray-600 mb-1'>Price: ${item.price}</p>
+                  <p className='text-gray-600 mb-1'>₹{item.price} × {item.quantity}</p>
                   <p className="text-yellow-500 mb-2">
                     ⭐ {item.rating.rate} ({item.rating.count})
                   </p>
