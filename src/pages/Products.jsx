@@ -7,12 +7,23 @@ import { fetchCategories } from '../services/ProductService'
 function Products() {
 
   const [search,setSearch] = useState("");
+  const [debouncedSearch, setDebouncedsearch] = useState("");
+
+
   const [products, setProducts] = useState([]);
   const[loading, setLoading] = useState(true);
 
   const[categories, setCategories] = useState([]);
   const[slectedCategory, setSelectedCategory] = useState("all");
 
+
+  useEffect(()=>{
+    const timer = setTimeout(()=>{
+      setDebouncedsearch(search);
+
+    },500);
+    return () => clearTimeout(timer);
+  },[search]);
 
   useEffect(()=>{
     async function loadProducts(){
@@ -35,7 +46,7 @@ function Products() {
   const filteredProducts = products.filter((product)=> {
 
     const matchesSearch = 
-      product.title.toLowerCase().includes(search.toLowerCase());
+      product.title.toLowerCase().includes(debouncedSearch.toLowerCase());
 
     const matchesCategory = 
       slectedCategory === "all" || product.category === slectedCategory;
