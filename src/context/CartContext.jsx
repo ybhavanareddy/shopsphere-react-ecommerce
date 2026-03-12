@@ -28,6 +28,29 @@ function CartProvider({children}){
         toast.success(" Product added to cart");
     }
 
+    function increaseQuantity(id){
+        const updatedCart = cartItems.map((item)=>
+            item.id === id 
+            ? {...item, quantity: item.quantity+1}
+            : item
+        );
+        setCartItems(updatedCart)
+    }
+
+    function decreaseQuantity(id) {
+
+        const updatedCart = cartItems
+            .map((item) =>
+            item.id === id
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
+            )
+            .filter((item) => item.quantity > 0);
+
+        setCartItems(updatedCart);
+
+    }
+
     function removeFromCart(index){
         const updatedCart = cartItems.filter((_,i)=> i !== index);
         setCartItems(updatedCart);
@@ -42,7 +65,14 @@ function CartProvider({children}){
     }
     
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ 
+            cartItems, 
+            addToCart, 
+            removeFromCart, 
+            clearCart ,
+            increaseQuantity,
+            decreaseQuantity
+            }}>
             {children}
         </CartContext.Provider>
     )
