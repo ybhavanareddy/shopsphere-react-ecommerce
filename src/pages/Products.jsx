@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
 import ProductGrid from '../components/ProductGrid'
-import { fetchProducts } from '../services/temp.jsx'
-import { fetchCategories } from '../services/temp.jsx'
+import { fetchProducts } from '../services/ProductService.js'
+import { fetchCategories } from '../services/ProductService.js'
 import ProductSkeleton from '../components/ProductSkelton'
 
 
