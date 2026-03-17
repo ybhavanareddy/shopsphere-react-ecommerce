@@ -53,6 +53,7 @@ function Cart() {
                       <button
                         onClick={() => decreaseQuantity(item.id)}
                         className="px-2 py-1 border rounded"
+                        disabled = {item.quantity === 1}
                       >
                         -
                       </button>

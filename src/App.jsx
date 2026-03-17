@@ -18,17 +18,46 @@ function App() {
   
   return (
     
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path= "/products/:id" element={<ProductDetails/>}/>
-        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-        <Route path="/checkout" element={<Checkout/>}/>
-        <Route path="/order-conformation" element={<OrderConformation/>}/>
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Layout>
+    
+    <Routes>
+      <Route path="/login" element={<Login />} />
+        
+        <Route 
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout/>
+            </ProtectedRoute>
+          }
+        >
+        <Route 
+          path="/" 
+          element={<Home />} />
+
+        <Route 
+        path="/products" 
+        element={ <Products /> } />
+
+        <Route 
+        path= "/products/:id" 
+        element={<ProductDetails/>}/>
+
+        <Route 
+          path="/cart" 
+          element={<Cart />} />
+
+        <Route 
+          path="/checkout" 
+          element={<Checkout/>}/>
+
+        <Route 
+          path="/order-conformation" 
+          element={<OrderConformation/>}/>
+
+
+        </Route>
+    </Routes>
+   
     
   )
 }
