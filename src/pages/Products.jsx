@@ -24,7 +24,7 @@ function Products() {
 
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 4;
+  const productsPerPage = 6;
 
 
   useEffect(()=>{
@@ -34,6 +34,7 @@ function Products() {
     },500);
     return () => clearTimeout(timer);
   },[search]);
+
 //Pagination Bug fix logic
   useEffect(() => {
     if (currentPage !== 1) {
@@ -50,7 +51,7 @@ useEffect(()=>{
 },[currentPage]);
 
 
-  useEffect(()=>{
+useEffect(()=>{
 
     async function loadProducts(){
       try{
@@ -68,7 +69,7 @@ useEffect(()=>{
       
     }
     loadProducts();
-  },[]);
+},[]);
 
 
 

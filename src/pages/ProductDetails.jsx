@@ -61,14 +61,14 @@ function ProductDetails() {
 
     <button
       onClick={() => addToCart(product)}
-      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 w-40"
+      className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 w-40"
     >
       Add to Cart
     </button>
 
     <Link 
         to="/products"
-        className="bg-blue-500 text-white text-center px-4 py-2 rounded hover:bg-blue-600 mb-4 w-40"
+        className="bg-blue-900 text-white text-center px-4 py-2 rounded hover:bg-blue-600 mb-4 w-40"
         >
           Go to Products
     </Link>
