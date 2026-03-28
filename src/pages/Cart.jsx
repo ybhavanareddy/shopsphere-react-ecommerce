@@ -10,7 +10,7 @@ function Cart() {
   const totalPrice = cartItems.reduce((total,item) => total + item.price*item.quantity,0);
 
   return (
-  <div className='p-8 max-w-3xl mx-auto'>
+  <div className='p-4 sm:p-8 max-w-4xl mx-auto'>
 
     {cartItems.length === 0 ? (
 
@@ -38,9 +38,9 @@ function Cart() {
           {cartItems.map((item,index)=>(
             <div
               key={index}
-              className='flex justify-between items-center border p-4 rounded'
+              className='flex flex-col sm:flex-row sm:justify-between sm:items-center border p-4 rounded gap-4'
             >
-              <div className='flex items-center gap-4'>
+              <div className='flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left'>
                 <img 
                   src={item.image}
                   alt={item.title}
@@ -79,7 +79,7 @@ function Cart() {
 
               <button
                 onClick={()=>removeFromCart(index)}
-                className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'
+                className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 self-center sm:self-auto'
               >
                 Remove
               </button>
@@ -87,7 +87,7 @@ function Cart() {
           ))}
         </div>
 
-        <div className='mt-6 border-t pt-4 flex justify-between font-bold text-lg'>
+        <div className='mt-6 border-t pt-4 flex  justify-between font-bold text-lg gap-y-2'>
           <span>Total</span>
           <span>${totalPrice}</span>
         </div>
