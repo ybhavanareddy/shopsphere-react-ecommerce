@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 import ProductGrid from '../components/ProductGrid'
 import { fetchProducts } from '../services/ProductService.js'
@@ -73,36 +73,38 @@ useEffect(()=>{
 
 
 
+const filteredProducts = useMemo(()=>{
+      let result = products.filter((product)=> {
 
-  let filteredProducts = products.filter((product)=> {
+        const matchesSearch = 
+          product.title.toLowerCase().includes(debouncedSearch.toLowerCase());
 
-    const matchesSearch = 
-      product.title.toLowerCase().includes(debouncedSearch.toLowerCase());
+        const matchesCategory = 
+          slectedCategory === "all" || product.category === slectedCategory;
 
-    const matchesCategory = 
-      slectedCategory === "all" || product.category === slectedCategory;
+        return matchesSearch && matchesCategory;
+      });
 
-    return matchesSearch && matchesCategory;
-  });
+      if (sortOption === "price-low") {
 
-  if (sortOption === "price-low") {
+      result.sort((a, b) => a.price - b.price);
 
-  filteredProducts.sort((a, b) => a.price - b.price);
+    }
 
-}
+    if (sortOption === "price-high") {
 
-if (sortOption === "price-high") {
+      result.sort((a, b) => b.price - a.price);
 
-  filteredProducts.sort((a, b) => b.price - a.price);
+    }
 
-}
+    if (sortOption === "rating") {
 
-if (sortOption === "rating") {
+      result.sort((a, b) => b.rating.rate - a.rating.rate);
 
-  filteredProducts.sort((a, b) => b.rating.rate - a.rating.rate);
+    }
 
-}
-
+},[products,debouncedSearch,slectedCategory,sortOption])
+  
 //Pagination Logic 
 
 const indexOfLastProduct = currentPage * productsPerPage
