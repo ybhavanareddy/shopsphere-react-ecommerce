@@ -38,7 +38,7 @@ function ProductDetails() {
   <div className="p-8 max-w-3xl mx-auto flex flex-col">
 
     <img
-      src={product.image}
+      src={product.thumbnail}
       alt={product.title}
       className="h-60 mx-auto object-contain mb-6"
     />
@@ -53,6 +53,9 @@ function ProductDetails() {
 
     <p className="text-lg font-semibold mb-4">
       Price: ₹{product.price}
+    </p>
+    <p className="text-yellow-500 mb-4">
+      ⭐ {product.rating}
     </p>
 
     <p className="mb-6">

@@ -18,7 +18,7 @@ function Products() {
   const [error,setError] = useState(null)
 
   const[categories, setCategories] = useState([]);
-  const[slectedCategory, setSelectedCategory] = useState("all");
+  const[selectedCategory, setSelectedCategory] = useState("all");
 
   const[sortOption,setSortOption]  = useState("default");
 
@@ -40,7 +40,7 @@ function Products() {
     if (currentPage !== 1) {
     setCurrentPage(1);
   }
-}, [debouncedSearch, slectedCategory, sortOption]);
+}, [debouncedSearch, selectedCategory, sortOption]);
 
 //scroll to top when page changes
 useEffect(()=>{
@@ -55,6 +55,9 @@ useEffect(()=>{
 
     async function loadProducts(){
       try{
+        setLoading(true);
+        setError(null);
+
         const data = await fetchProducts();
         setProducts(data);
 
@@ -80,7 +83,7 @@ const filteredProducts = useMemo(()=>{
           product.title.toLowerCase().includes(debouncedSearch.toLowerCase());
 
         const matchesCategory = 
-          slectedCategory === "all" || product.category === slectedCategory;
+          selectedCategory === "all" ||   product.category?.toLowerCase().includes(selectedCategory.toLowerCase());
 
         return matchesSearch && matchesCategory;
       });
@@ -99,11 +102,12 @@ const filteredProducts = useMemo(()=>{
 
     if (sortOption === "rating") {
 
-      result.sort((a, b) => b.rating.rate - a.rating.rate);
+      result.sort((a, b) => b.rating - a.rating);
 
     }
+    return result;
 
-},[products,debouncedSearch,slectedCategory,sortOption])
+},[products,debouncedSearch,selectedCategory,sortOption])
   
 //Pagination Logic 
 
@@ -181,7 +185,7 @@ if (error) {
         <button 
           onClick = {()=> setSelectedCategory("all")}
           className={`px-3 py-1 border rounded ${
-            slectedCategory === "all" ? "bg-blue-900 text-white" : "bg-white"
+            selectedCategory === "all" ? "bg-blue-900 text-white" : "bg-white"
           }`}
           >
             All
@@ -189,13 +193,13 @@ if (error) {
 
           {categories.map((category) => (
             <button 
-              key={category}
-              onClick={()=> setSelectedCategory(category)}
+              key={category.slug}
+              onClick={()=> setSelectedCategory(category.slug)}
               className={`px-3 py-1 border rounded ${
-                    slectedCategory === category ? "bg-blue-900 text-white" : "bg-white"
+                    selectedCategory === category.slug ? "bg-blue-900 text-white" : "bg-white"
               }`}
               >
-                {category}
+                {category.name}
             </button>
           ))}
       </div>

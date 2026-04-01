@@ -35,14 +35,14 @@ function Cart() {
         </h1>
 
         <div className='space-y-4'>
-          {cartItems.map((item,index)=>(
+          {cartItems.map((item)=>(
             <div
-              key={index}
+              key={item.id}
               className='flex flex-col sm:flex-row sm:justify-between sm:items-center border p-4 rounded gap-4'
             >
               <div className='flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left'>
                 <img 
-                  src={item.image}
+                  src={item.thumbnail}
                   alt={item.title}
                   className='h-16 w-16 object-contain'
                 />
@@ -71,14 +71,14 @@ function Cart() {
 
                   </div>
                   <p className="text-yellow-500 mb-2">
-                    ⭐ {item.rating.rate} ({item.rating.count})
+                    ⭐ {item.rating} 
                   </p>
                 </div>
                 
               </div>
 
               <button
-                onClick={()=>removeFromCart(index)}
+                onClick={()=>removeFromCart(item.id)}
                 className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 self-center sm:self-auto'
               >
                 Remove

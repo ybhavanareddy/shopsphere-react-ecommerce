@@ -3,19 +3,19 @@ import { useContext } from 'react'
 import { CartContext } from '../context/CartContext'
 import { Link } from 'react-router-dom'
 
-function ProductCard({id,title,price,image,rating}) {
+function ProductCard({id,title,price,thumbnail,rating}) {
 
   const { addToCart } = useContext(CartContext)
 
   function handleAdd(){
-    const product = {id,title,price,image,rating}
+    const product = {id,title,price,thumbnail,rating}
     addToCart(product)
   }
 
   return (
     <div className='border rounded-lg p-4 shadow hover:shadow-lg transition duration-300 flex flex-col justify-between h-full'>
         <img 
-        src={image}
+        src={thumbnail}
         alt={title}
         className = "h-32 sm:h-36 md:h-40 mx-auto object-contain mb-4"
         />
@@ -29,7 +29,7 @@ function ProductCard({id,title,price,image,rating}) {
           Price: ₹{price}
         </p>
         <p className="text-yellow-500 text-sm mb-2">
-          ⭐ {rating.rate} ({rating.count})
+          ⭐ {rating}
         </p>
         <button 
         onClick={handleAdd}
