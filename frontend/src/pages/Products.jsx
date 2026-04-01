@@ -33,9 +33,9 @@ function Products() {
 
 //Pagination Bug fix logic
   useEffect(() => {
-    if (currentPage !== 1) {
+    
     setCurrentPage(1);
-  }
+  
 }, [debouncedSearch, selectedCategory, sortOption]);
 
 //scroll to top when page changes

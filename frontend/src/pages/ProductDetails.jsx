@@ -4,10 +4,10 @@ import { useEffect,useState } from 'react';
 import { fetchProductById } from '../services/ProductService.js';
 
 import { useContext } from 'react';
-import { CartContext } from '../context/CartContext';
+import { CartContext } from '../context/CartContext.jsx';
 import { Link } from 'react-router-dom';
 
-import ProductDetailsSkeleton from '../components/ProductDetailsSkeleton';
+import ProductDetailsSkeleton from '../components/ProductDetailsSkeleton.jsx';
 
 function ProductDetails() {
 

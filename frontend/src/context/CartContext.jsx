@@ -51,8 +51,8 @@ function CartProvider({children}){
 
     }
 
-    function removeFromCart(index){
-        const updatedCart = cartItems.filter((_,i)=> i !== index);
+    function removeFromCart(id){
+        const updatedCart = cartItems.filter((item)=> item.id !== id);
         setCartItems(updatedCart);
         toast.error(" Product removed from cart");
 
