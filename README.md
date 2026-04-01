@@ -9,7 +9,7 @@
 
 ## 🚀 Live Demo
 
-- 🔗 https://shopsphere-react-ecommerce-dqivr0dlg-bhavana-yathams-projects.vercel.app/products
+- 🔗 https://shopsphere-react-ecommerce-dqivr0dlg-bhavana-yathams-projects.vercel.app/
 
 ## 🎯 Key Highlights
 
