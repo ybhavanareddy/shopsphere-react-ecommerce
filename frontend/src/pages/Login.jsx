@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+import { loginUser } from "../services/authService";
+
 function Login() {
 
   const navigate = useNavigate();
@@ -15,10 +17,31 @@ function Login() {
 
   const usernameRef = useRef(null);
 
-  function handleSubmit(e){
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(username);
-    navigate("/");
+    try{
+      const response = await loginUser({email,password});
+
+      if(response.token){
+        //store token in localStorage
+        localStorage.setItem("token", response.token);
+
+        //update UI state 
+        login(username);
+        //redirect to home page 
+      navigate("/");
+      }
+      else{
+      alert(response.message || "Login failed");
+
+      
+
+    }  }catch(error){
+      console.error("Login error:", error);
+      alert("Login failed. Please try again.");
+
+    }
+    
 
   }
 
