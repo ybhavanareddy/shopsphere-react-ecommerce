@@ -1,4 +1,4 @@
-const BASE_URL = "https://shopsphere-backend-xs4m.onrender.com/api/auth";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/auth`;
 
 //Registr User 
 

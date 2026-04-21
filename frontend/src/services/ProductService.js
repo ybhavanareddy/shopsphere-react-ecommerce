@@ -1,4 +1,4 @@
-const BASE_URL = "https://shopsphere-backend-xs4m.onrender.com/api/products";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/products`;
 
 export async function fetchProducts(){
   const response = await fetch(BASE_URL);
