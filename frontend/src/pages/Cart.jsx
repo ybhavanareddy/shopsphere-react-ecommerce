@@ -5,9 +5,17 @@ import { Link } from 'react-router-dom'
 
 function Cart() {
 
-  const {cartItems, removeFromCart,increaseQuantity, decreaseQuantity} = useContext(CartContext)
+  const {loading, cartItems, removeFromCart,increaseQuantity, decreaseQuantity} = useContext(CartContext)
 
-  const totalPrice = cartItems.reduce((total,item) => total + item.price*item.quantity,0);
+  const totalPrice = cartItems.reduce((total,item) => total + item.product.price*item.quantity,0);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[60vh]">
+        <div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full"></div>
+      </div>
+    );
+  }
 
   return (
   <div className='p-4 sm:p-8 max-w-4xl mx-auto'>
@@ -37,21 +45,21 @@ function Cart() {
         <div className='space-y-4'>
           {cartItems.map((item)=>(
             <div
-              key={item.id}
+              key={item.product._id}
               className='flex flex-col sm:flex-row sm:justify-between sm:items-center border p-4 rounded gap-4'
             >
               <div className='flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left'>
                 <img 
-                  src={item.thumbnail}
-                  alt={item.title}
+                  src={item.product.thumbnail}
+                  alt={item.product.title}
                   className='h-16 w-16 object-contain'
                 />
                 <div>
-                  <h3 className="font-semibold mb-1">{item.title}</h3>
+                  <h3 className="font-semibold mb-1">{item.product.title}</h3>
                   <div className="flex items-center gap-2">
 
                       <button
-                        onClick={() => decreaseQuantity(item.id)}
+                        onClick={() => decreaseQuantity(item.product._id)}
                         className="px-2 py-1 border rounded"
                         disabled = {item.quantity === 1}
                       >
@@ -63,7 +71,7 @@ function Cart() {
                       </span>
 
                       <button
-                        onClick={() => increaseQuantity(item.id)}
+                        onClick={() => increaseQuantity(item.product._id)}
                         className="px-2 py-1 border rounded"
                       >
                         +
@@ -71,14 +79,14 @@ function Cart() {
 
                   </div>
                   <p className="text-yellow-500 mb-2">
-                    ⭐ {item.rating} 
+                    ⭐ {item.product.rating} 
                   </p>
                 </div>
                 
               </div>
 
               <button
-                onClick={()=>removeFromCart(item.id)}
+                onClick={()=>removeFromCart(item.product._id)}
                 className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 self-center sm:self-auto'
               >
                 Remove
@@ -89,7 +97,7 @@ function Cart() {
 
         <div className='mt-6 border-t pt-4 flex  justify-between font-bold text-lg gap-y-2'>
           <span>Total</span>
-          <span>${totalPrice}</span>
+          <span>${totalPrice.toFixed(2)}</span>
         </div>
 
         <Link to="/checkout">

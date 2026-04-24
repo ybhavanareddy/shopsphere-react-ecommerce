@@ -112,3 +112,24 @@ export const removeCartItem = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// Clear cart (after order placement)
+export const clearCart = async (req, res) => {
+  try {
+    const userId = req.user;
+
+    const cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return res.json({ message: "Cart already empty" });
+    }
+
+    cart.items = []; // remove all items
+    await cart.save();
+
+    res.json({ message: "Cart cleared", cart });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

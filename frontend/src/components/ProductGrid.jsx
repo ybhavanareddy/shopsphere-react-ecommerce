@@ -7,11 +7,7 @@ function ProductGrid({products}) {
             
                 <ProductCard 
                     key={product._id}
-                    id={product._id}
-                    title={product.title}
-                    price={product.price}
-                    thumbnail= {product.thumbnail}
-                    rating={product.rating}
+                    product={product}
                 />
         ))}
     

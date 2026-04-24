@@ -2,7 +2,8 @@ import express from 'express';
 import { addToCart, 
     getCart,
     updateCartItem,
-    removeCartItem
+    removeCartItem,
+    clearCart
  } from '../controllers/cartController.js';
 
 import protect from '../middlewares/authMiddleware.js';
@@ -23,4 +24,6 @@ router.patch("/:productId",protect,updateCartItem);
 //DELETE remove item from cart -> api/cart/remove/:productId
 router.delete("/:productId",protect,removeCartItem);
 
+//DELETE clear cart -> api/cart/clear
+router.delete("/clear",protect,clearCart);
 export default router;

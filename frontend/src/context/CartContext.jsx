@@ -1,77 +1,93 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { fetchCart, addToCartAPI,updateCartAPI,removeFromCartAPI, clearCartAPI } from "../services/cartService";
 
 export const CartContext = createContext();
 
+
 function CartProvider({children}){
+    
     const [cartItems,setCartItems] = useState([]);
+    const [loading, setLoading] = useState(false);
+    
+    async function loadCart(){
+        try{
+            setLoading(true);
+            const data = await fetchCart();
+            setCartItems(data.items || []);
+        }
+        catch(error){
+            console.error("Error fetching cart:", error);
+        }finally{
+            setLoading(false);
+        }
+    }
 
-    function addToCart(product){
+    useEffect(()=>{
+        loadCart();
+    },[]);
 
-        const existingProduct = cartItems.find((item)=> item.id === product.id);
+    async function addToCart(product) {
+    try {
+        await addToCartAPI(product._id);
+        await loadCart();
+        toast.success("Product added to cart");
+    } catch (error) {
+        toast.error("Failed to add product");
+    }
+    }
 
-        if(existingProduct) {
-            const updatedCart = cartItems.map((item)=>
-                item.id === product.id 
-                ?{...item, quantity:item.quantity+1}
-                :item
-            );
-            setCartItems(updatedCart);
-        }else{
-            setCartItems([
-                ...cartItems,
-                {...product, quantity:1}
-            ]);
+    
+    
+
+    async function increaseQuantity(id) {
+        const item = cartItems.find(i => i.product._id === id);
+        if (!item) return;
+
+        await updateCartAPI(id, item.quantity + 1);
+        await loadCart();
+    }
+
+    async function decreaseQuantity(id) {
+        const item = cartItems.find(i => i.product._id === id);
+        if (!item) return;
+
+        if (item.quantity === 1) {
+            await removeFromCartAPI(id);
+        } else {
+            await updateCartAPI(id, item.quantity - 1);
         }
 
-        
-        toast.success(" Product added to cart");
+        await loadCart();
     }
 
-    function increaseQuantity(id){
-        const updatedCart = cartItems.map((item)=>
-            item.id === id 
-            ? {...item, quantity: item.quantity+1}
-            : item
-        );
-        setCartItems(updatedCart)
+   async function removeFromCart(id) {
+        await removeFromCartAPI(id);
+        await loadCart();
+        toast.error("Product removed from cart");
     }
 
-    function decreaseQuantity(id) {
-
-        const updatedCart = cartItems
-            .map((item) =>
-            item.id === id
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            )
-            .filter((item) => item.quantity > 0);
-
-        setCartItems(updatedCart);
-
-    }
-
-    function removeFromCart(id){
-        const updatedCart = cartItems.filter((item)=> item.id !== id);
-        setCartItems(updatedCart);
-        toast.error(" Product removed from cart");
-
-
-    }
-
-    function clearCart(){
+    async function clearCart() {
+    try {
+        setLoading(true);
+        await clearCartAPI();
         setCartItems([]);
-        toast.info(" Cart cleared");
+        toast.info("Cart cleared");
+    } finally {
+        setLoading(false);
     }
+    }
+
     
     return (
         <CartContext.Provider value={{ 
             cartItems, 
             addToCart, 
             removeFromCart, 
-            clearCart ,
             increaseQuantity,
-            decreaseQuantity
+            decreaseQuantity,
+            clearCart,
+            loading
             }}>
             {children}
         </CartContext.Provider>

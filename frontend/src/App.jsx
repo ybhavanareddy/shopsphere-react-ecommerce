@@ -20,43 +20,51 @@ function App() {
   return (
     
     
-    <Routes>
+     <Routes>
+
+      {/* Public routes */}
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register/>}/>
+      <Route path="/register" element={<Register />} />
+
+      {/* Layout (NO protection here) */}
+      <Route path="/" element={<Layout />}>
+
+        <Route index element={<Home />} />
+
+        <Route path="products" element={<Products />} />
+
+        <Route path="products/:id" element={<ProductDetails />} />
+
+        {/* Protected routes */}
         <Route 
-          path="/"
+          path="cart" 
           element={
             <ProtectedRoute>
-              <Layout/>
+              <Cart />
             </ProtectedRoute>
-          }
-        >
-        <Route 
-          index 
-          element={<Home />} />
+          } 
+        />
 
         <Route 
-        path="/products" 
-        element={ <Products /> } />
+          path="checkout" 
+          element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          } 
+        />
 
         <Route 
-        path= "/products/:id" 
-        element={<ProductDetails/>}/>
+          path="order-conformation" 
+          element={
+            <ProtectedRoute>
+              <OrderConformation />
+            </ProtectedRoute>
+          } 
+        />
 
-        <Route 
-          path="/cart" 
-          element={<Cart />} />
+      </Route>
 
-        <Route 
-          path="/checkout" 
-          element={<Checkout/>}/>
-
-        <Route 
-          path="/order-conformation" 
-          element={<OrderConformation/>}/>
-
-
-        </Route>
     </Routes>
    
     
