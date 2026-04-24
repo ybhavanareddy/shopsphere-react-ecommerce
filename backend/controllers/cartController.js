@@ -36,3 +36,21 @@ export const addToCart = async(req,res)=>{
         res.status(500).json({message: error.message});
     }
 };
+
+//Get user cart
+
+export const getCart = async(req,res)=>{
+    try{
+        const userId = req.user.id; //from jwt middleware(authMiddleware)
+
+        const cart = await Cart.findOne({user:userId}).populate("items.product");
+
+        if(!cart){
+            return res.json({items:[]});
+        }
+        res.json(cart);
+
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
