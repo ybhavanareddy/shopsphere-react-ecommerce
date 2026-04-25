@@ -141,11 +141,47 @@ if (error) {
          </div>
       ) : (
       <div className='px-4 sm:px-6 md:px-8 py-6'>
-          <h1 className='text-xl sm:text-2xl md:text-3xl font-bold mb-6'>
-            Products
-          </h1>
-        <div className="sticky top-16 z-40 bg-white/80 backdrop-blur-md py-3 rounded-lg shadow mb-6  p-4">
+          
+        <div className="sticky top-16 z-40 bg-white/80 backdrop-blur-md py-3 rounded-lg shadow-sm mb-3  p-4">
 
+
+          <input 
+            ref = {inputRef}
+            type ="text"
+            placeholder='Search products...'
+            value={search}
+            onChange={(e)=> setSearch(e.target.value)}
+            className='border px-3 py-2 mb-4 w-full rounded-lg text-sm sm:test-base focus:outline-none focus:ring-2 focus:ring-purple-400'
+          />
+
+          
+
+          <div className='flex gap-3 overflow-x-auto whitespace-nowrap pb-2 mb-4 scrollbar-hide'>
+            <button 
+              onClick = {()=> setSelectedCategory("all")}
+              className={`px-4 py-1 rounded-full border shrink-0 ${
+                selectedCategory === "all" ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white border-none" 
+                                           : "bg-white hover:bg-gray-100"
+              }`}
+              >
+                All
+              </button>
+
+              {categories.map((category) => (
+                <button 
+                  key={category.slug}
+                  onClick={()=> setSelectedCategory(category.slug)}
+                  className={`px-4 py-1 rounded-full border shrink-0 ${
+                        selectedCategory === category.slug ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white border-none" 
+                                                          : "bg-white hover:bg-gray-100"
+                  }`}
+                  >
+                    {category.name}
+                </button>
+              ))}
+          </div>
+
+        {selectedCategory !== "all" && (
           <div className='mb-4 flex flex-col sm:flex-row sm:items-center gap-2'>
             <label className='mr-2 font-semibold'>
               Sort By:
@@ -161,40 +197,9 @@ if (error) {
               <option value="rating">Rating</option>
             </select>
           </div>
+        )}
 
-          <div className='flex flex-wrap gap-2 sm:gap-3 mb-6'>
-            <button 
-              onClick = {()=> setSelectedCategory("all")}
-              className={`px-3 py-1 border rounded ${
-                selectedCategory === "all" ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white border-none" 
-                                           : "bg-white hover:bg-gray-100"
-              }`}
-              >
-                All
-              </button>
-
-              {categories.map((category) => (
-                <button 
-                  key={category.slug}
-                  onClick={()=> setSelectedCategory(category.slug)}
-                  className={`px-3 py-1 border rounded ${
-                        selectedCategory === category.slug ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white border-none" 
-                                                          : "bg-white hover:bg-gray-100"
-                  }`}
-                  >
-                    {category.name}
-                </button>
-              ))}
-          </div>
-
-          <input 
-            ref = {inputRef}
-            type ="text"
-            placeholder='Search products...'
-            value={search}
-            onChange={(e)=> setSearch(e.target.value)}
-            className='border p-3 mb-6 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400'
-          />
+          
         </div>
 
           {currentProducts.length === 0 ? (
