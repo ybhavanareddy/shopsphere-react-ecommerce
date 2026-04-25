@@ -12,7 +12,7 @@ function Cart() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-[60vh]">
-        <div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full"></div>
+        <div className="animate-spin h-8 w-8 border-4 border-purple-500 rounded-full"></div>
       </div>
     );
   }
@@ -22,14 +22,14 @@ function Cart() {
 
     {cartItems.length === 0 ? (
 
-      <div className='flex flex-col items-center justify-center h-[60vh]'>
+      <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center bg-white rounded-xl shadow-md p-4 gap-4'>
         <h1 className='text-2xl font-bold mb-4'>
           Your Cart is Empty
         </h1>
 
         <Link
           to="/products"
-          className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
+          className='bg-gradient-to-r from-purple-600 to-pink-500 text-white px-5 py-2 rounded-lg hover:opacity-90 transition'
         >
           Continue Shopping
         </Link>
@@ -46,7 +46,7 @@ function Cart() {
           {cartItems.map((item)=>(
             <div
               key={item.product._id}
-              className='flex flex-col sm:flex-row sm:justify-between sm:items-center border p-4 rounded gap-4'
+              className='flex flex-col sm:flex-row sm:justify-between sm:items-center bg-white/70 backdrop-blur-md rounded-xl shadow-md p-4 gap-4 border border-white/40'
             >
               <div className='flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left'>
                 <img 
@@ -60,7 +60,7 @@ function Cart() {
 
                       <button
                         onClick={() => decreaseQuantity(item.product._id)}
-                        className="px-2 py-1 border rounded"
+                        className="px-3 py-1 border rounded-lg hover:bg-gray-100 transition"
                         disabled = {item.quantity === 1}
                       >
                         -
@@ -72,7 +72,7 @@ function Cart() {
 
                       <button
                         onClick={() => increaseQuantity(item.product._id)}
-                        className="px-2 py-1 border rounded"
+                        className="px-3 py-1 border rounded-lg hover:bg-gray-100 transition"
                       >
                         +
                       </button>
@@ -87,7 +87,7 @@ function Cart() {
 
               <button
                 onClick={()=>removeFromCart(item.product._id)}
-                className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 self-center sm:self-auto'
+                className='bg-gradient-to-r from-purple-600 to-pink-500 text-white px-5 py-2 rounded-lg hover:opacity-90 transition'
               >
                 Remove
               </button>
@@ -95,13 +95,13 @@ function Cart() {
           ))}
         </div>
 
-        <div className='mt-6 border-t pt-4 flex  justify-between font-bold text-lg gap-y-2'>
+        <div className='mt-6 border-t pt-4 flex justify-between items-center font-semibold text-lg'>
           <span>Total</span>
-          <span>${totalPrice.toFixed(2)}</span>
+          <span>₹ {totalPrice.toFixed(2)}</span>
         </div>
 
         <Link to="/checkout">
-          <button className='mt-6 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600'>
+          <button className='mt-6 w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-3 rounded-lg hover:opacity-90 transition font-semibold'>
             Proceed to checkout
           </button>
         </Link>

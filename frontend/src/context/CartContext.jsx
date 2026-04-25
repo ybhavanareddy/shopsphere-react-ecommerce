@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { fetchCart, addToCartAPI,updateCartAPI,removeFromCartAPI, clearCartAPI } from "../services/cartService";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 export const CartContext = createContext();
 
@@ -9,7 +11,8 @@ function CartProvider({children}){
     
     const [cartItems,setCartItems] = useState([]);
     const [loading, setLoading] = useState(false);
-    
+    const {token} = useContext(AuthContext);
+
     async function loadCart(){
         try{
             
@@ -23,19 +26,25 @@ function CartProvider({children}){
 
     useEffect(() => {
         async function initCart() {
-            setLoading(true);   // ✅ only here
+            if (!token) {
+            setCartItems([]); 
+            return;
+            }
+            setLoading(true);   
             await loadCart();
-            setLoading(false);  // ✅ only here
+            setLoading(false);  
         }
 
         initCart();
-    }, []);
+    }, [token]);
 
     async function addToCart(product) {
     try {
         await addToCartAPI(product._id);
         await loadCart();
         toast.success("Product added to cart");
+        console.log("API CALL",product._id)
+        console.log("ADD TO CART CALLED");
     } catch (error) {
         toast.error("Failed to add product");
     }
@@ -65,23 +74,34 @@ function CartProvider({children}){
         await loadCart();
     }
 
-   async function removeFromCart(id) {
+   
+
+    
+
+    async function clearCart() {
+        try {
+            setLoading(true);
+             
+            setCartItems([]);
+            await clearCartAPI();
+        
+            await loadCart();     
+            
+
+            toast.info("Cart cleared");
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function removeFromCart(id) {
         await removeFromCartAPI(id);
         await loadCart();
         toast.error("Product removed from cart");
     }
-
-    async function clearCart() {
-    try {
-        setLoading(true);
-        await clearCartAPI();
-        setCartItems([]);
-        toast.info("Cart cleared");
-    } finally {
-        setLoading(false);
-    }
-    }
-
     
     return (
         <CartContext.Provider value={{ 

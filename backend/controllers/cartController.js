@@ -1,3 +1,4 @@
+
 import Cart from '../models/Cart.js';
 
 //Add item to cart 
@@ -7,6 +8,9 @@ export const addToCart = async(req,res)=>{
         const userId = req.user.id; //from jwt middleware(authMiddleware)
         const {productId} = req.body;
 
+        if (!productId) {
+        return res.status(400).json({ message: "Product ID required" });
+        }
         let cart = await Cart.findOne({user:userId});
 
         //If cart doesn't exist, create new cart
@@ -18,8 +22,8 @@ export const addToCart = async(req,res)=>{
            
         } else{
                 const itemIndex = cart.items.findIndex(
-                (item)=> item.product.toString() === productId
-                );
+                (item)=> item.product.toString() === productId.toString()
+            );
 
                 if(itemIndex > -1){
                     //If product already exists in cart, increase quantity
@@ -43,6 +47,8 @@ export const getCart = async(req,res)=>{
     try{
         const userId = req.user.id; //from jwt middleware(authMiddleware)
 
+        console.log("REQ.USER:", req.user);
+        console.log("USER ID:", req.user.id);
         const cart = await Cart.findOne({user:userId}).populate("items.product");
 
         if(!cart){
@@ -116,7 +122,8 @@ export const removeCartItem = async (req, res) => {
 // Clear cart (after order placement)
 export const clearCart = async (req, res) => {
   try {
-    const userId = req.user;
+    console.log("🔥 CLEAR CART API HIT");
+    const userId = req.user.id;
 
     const cart = await Cart.findOne({ user: userId });
 
@@ -124,8 +131,11 @@ export const clearCart = async (req, res) => {
       return res.json({ message: "Cart already empty" });
     }
 
+    console.log("Before clear:", cart.items);
     cart.items = []; // remove all items
     await cart.save();
+    console.log("After clear:", cart.items);
+    console.log("User ID:", userId);
 
     res.json({ message: "Cart cleared", cart });
 

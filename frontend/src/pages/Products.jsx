@@ -140,106 +140,111 @@ if (error) {
 
          </div>
       ) : (
-          <div className='px-4 sm:px-6 md:px-8 py-6'>
-      <h1 className='text-xl sm:text-2xl md:text-3xl font-bold mb-6'>
-        Products
-      </h1>
+      <div className='px-4 sm:px-6 md:px-8 py-6'>
+          <h1 className='text-xl sm:text-2xl md:text-3xl font-bold mb-6'>
+            Products
+          </h1>
+        <div className="sticky top-16 z-40 bg-white/80 backdrop-blur-md py-3 rounded-lg shadow mb-6  p-4">
 
-      <div className='mb-4 flex flex-col sm:flex-row sm:items-center gap-2'>
-        <label className='mr-2 font-semibold'>
-          Sort By:
-        </label>
-        <select 
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-          className='border px-2 py-1 rounded'
-        >
-          <option value="default">Default</option>
-          <option value="price-low">Price: Low to High</option>
-          <option value="price-high">Price: High to Low</option>
-          <option value="rating">Rating</option>
-        </select>
-      </div>
+          <div className='mb-4 flex flex-col sm:flex-row sm:items-center gap-2'>
+            <label className='mr-2 font-semibold'>
+              Sort By:
+            </label>
+            <select 
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className='border px-2 py-1 rounded'
+            >
+              <option value="default">Default</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Rating</option>
+            </select>
+          </div>
 
-      <div className='flex flex-wrap gap-2 sm:gap-3 mb-6'>
-        <button 
-          onClick = {()=> setSelectedCategory("all")}
-          className={`px-3 py-1 border rounded ${
-            selectedCategory === "all" ? "bg-blue-900 text-white" : "bg-white"
-          }`}
-          >
-            All
-          </button>
-
-          {categories.map((category) => (
+          <div className='flex flex-wrap gap-2 sm:gap-3 mb-6'>
             <button 
-              key={category.slug}
-              onClick={()=> setSelectedCategory(category.slug)}
+              onClick = {()=> setSelectedCategory("all")}
               className={`px-3 py-1 border rounded ${
-                    selectedCategory === category.slug ? "bg-blue-900 text-white" : "bg-white"
+                selectedCategory === "all" ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white border-none" 
+                                           : "bg-white hover:bg-gray-100"
               }`}
               >
-                {category.name}
-            </button>
-          ))}
-      </div>
+                All
+              </button>
 
-      <input 
-        ref = {inputRef}
-        type ="text"
-        placeholder='Search products...'
-        value={search}
-        onChange={(e)=> setSearch(e.target.value)}
-        className='border p-2 mb-6 w-full rounded'
-      />
+              {categories.map((category) => (
+                <button 
+                  key={category.slug}
+                  onClick={()=> setSelectedCategory(category.slug)}
+                  className={`px-3 py-1 border rounded ${
+                        selectedCategory === category.slug ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white border-none" 
+                                                          : "bg-white hover:bg-gray-100"
+                  }`}
+                  >
+                    {category.name}
+                </button>
+              ))}
+          </div>
 
-      {currentProducts.length === 0 ? (
-
-        <div className="text-center mt-10 text-lg font-semibold">
-
-          No products found
-
+          <input 
+            ref = {inputRef}
+            type ="text"
+            placeholder='Search products...'
+            value={search}
+            onChange={(e)=> setSearch(e.target.value)}
+            className='border p-3 mb-6 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400'
+          />
         </div>
 
-      ) : (
+          {currentProducts.length === 0 ? (
 
-        <ProductGrid products={currentProducts} />
+            <div className="text-center mt-10 text-lg font-semibold">
 
-      )}
+              No products found
 
-      <div className='flex flex-wrap justify-center mt-8 gap-2'>
-        <button 
-        onClick={()=> setCurrentPage(currentPage-1)}
-        disabled = {currentPage === 1}
-        className='px-3 py-1 border rounded'
-        >
-          Prev
-        </button>
-        {Array.from({length: totalPages}).map((_,index)=>(
+            </div>
 
-          <button 
-            key={index}
-            onClick={()=> setCurrentPage(index+1)}
-            className={`px-3 py-1 border rounded ${
-              currentPage === index+1 ? "bg-blue-900 text-white":"bg-white"
-            }`}
-          >
-            {index+1}
-          </button>
-        ))}
+          ) : (
+
+            <ProductGrid products={currentProducts} />
+
+          )}
+
+          <div className='flex flex-wrap justify-center mt-8 gap-2'>
+            <button 
+            onClick={()=> setCurrentPage(currentPage-1)}
+            disabled = {currentPage === 1}
+            className='px-4 py-1 border rounded-lg hover:bg-gray-100 disabled:opacity-50'
+            >
+              Prev
+            </button>
+            {Array.from({length: totalPages}).map((_,index)=>(
+
+              <button 
+                key={index}
+                onClick={()=> setCurrentPage(index+1)}
+                className={`px-3 py-1 border rounded ${
+                  currentPage === index+1 ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white"
+                                          :"bg-white hover:bg-gray-100"
+                }`}
+              >
+                {index+1}
+              </button>
+            ))}
 
 
-        
-        <button 
-        onClick={()=> setCurrentPage(currentPage+1)}
-        disabled = {currentPage === totalPages}
-        className='px-3 py-1 border rounded'
-        >
-          Next
-        </button>
+            
+            <button 
+            onClick={()=> setCurrentPage(currentPage+1)}
+            disabled = {currentPage === totalPages}
+            className='px-4 py-1 border rounded-lg hover:bg-gray-100 disabled:opacity-50'
+            >
+              Next
+            </button>
 
-      </div>
-      
+          </div>
+          
     </div>
       )}
     

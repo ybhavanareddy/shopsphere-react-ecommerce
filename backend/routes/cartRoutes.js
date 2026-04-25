@@ -21,9 +21,11 @@ router.get("/",protect,getCart);
 //PATCH update cart item quantity -> api/cart/update/:productId
 router.patch("/:productId",protect,updateCartItem);
 
+//DELETE clear cart -> api/cart/clear
+router.delete("/clear",protect,clearCart);
+
 //DELETE remove item from cart -> api/cart/remove/:productId
 router.delete("/:productId",protect,removeCartItem);
 
-//DELETE clear cart -> api/cart/clear
-router.delete("/clear",protect,clearCart);
+
 export default router;

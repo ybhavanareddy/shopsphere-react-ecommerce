@@ -17,7 +17,7 @@ function Checkout() {
     if (loading) {
     return (
       <div className="flex justify-center items-center h-[60vh]">
-        <div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full"></div>
+        <div className="animate-spin h-8 w-8 border-4 border-purple-500 rounded-full"></div>
       </div>
     );
   }
@@ -33,29 +33,33 @@ function Checkout() {
     }
 
   return (
-    <div className="bg-white shadow rounded-lg p-4 sm:p-6">
-        <div className="p-4  sm:p-8  mx-w-xl mx-auto">
-            <h1 className="text-2xl font-bold mb-6">
-                Checkout
-            </h1>
-            <div className="space-y-4">
-                {cartItems.map((item,index)=>(
-                    <div key={index} className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0">
-                        <span className="font-medium">{item.product.title}</span>
-                        <span className="text-gray-600">${item.product.price}*{item.quantity}</span>
-                    </div>
-                ))}
-            </div>
+    <div className="min-h-[80vh] flex items-center justify-center px-4">
+        <div className="w-full max-w-2xl bg-white/80 backdrop-blur-md shadow-xl rounded-xl p-6 sm:p-8">
+            
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">
+                    Checkout
+                </h1>
+                <div className="space-y-4">
+                    {cartItems.map((item,index)=>(
+                        <div key={index} className="flex justify-between items-center border-b pb-2">
+                            <span className="font-medium">{item.product.title}</span>
+                            <span className="text-gray-600">₹ {item.product.price}*{item.quantity}</span>
+                        </div>
+                    ))}
+                </div>
 
-            <div className="mt-6 border-t pt-4 flex justify-between font-bold">
-                <span>Total</span>
-                <span>{totalPrice.toFixed(2)}</span>
-            </div>
+                <div className="mt-6 border-t pt-4 flex justify-between font-semibold text-lg">
+                    <span>Total</span>
+                    <span>₹ {totalPrice.toFixed(2)}</span>
+                </div>
 
-            <button 
-                onClick={handlePlaceOrder}
-                className="mt-6 w-full bg-green-500 text-white py-3 rounded hover:bg-green-600 transition">Place Order</button>
+                <button 
+                    onClick={handlePlaceOrder}
+                    className="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-3 rounded-lg hover:opacity-90 hover:scale-[1.02] transition font-semibold mt-4">Place Order</button>
+           
+
         </div>
+    
     </div>
   )
 }

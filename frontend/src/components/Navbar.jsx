@@ -19,7 +19,7 @@ function Navbar() {
     }
 
   return (
-    <nav className='bg-blue-900 text-white px-4 sm:px-6 py-4 flex justify-between items-center'>
+    <nav className='bg-gradient-to-r from-purple-600 to-pink-500 text-white px-4 sm:px-6 py-4 flex justify-between items-center sticky top-0 z-50'>
         
         <h2 className='text-xl font-bold'>Shopsphere</h2>
         <button
@@ -32,7 +32,7 @@ function Navbar() {
         <ul className= {`
             absolute md:static 
             top-16 left-0 w-full md:w-auto
-            bg-blue-900 md:bg-transparent
+            bg-gradient-to-r from-purple-600 to-pink-500 md:bg-none
             flex flex-col md:flex-row 
             items-center gap-4 md:gap-6
             py-4 md:py-0

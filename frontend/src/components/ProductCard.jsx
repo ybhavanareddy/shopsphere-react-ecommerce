@@ -12,11 +12,11 @@ function ProductCard({product}) {
   }
 
   return (
-    <div className='border rounded-lg p-4 shadow hover:shadow-lg transition duration-300 flex flex-col justify-between h-full'>
+    <div className='bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between h-full'>
         <img 
         src={product.thumbnail}
         alt={product.title}
-        className = "h-32 sm:h-36 md:h-40 mx-auto object-contain mb-4"
+        className = "h-32 sm:h-36 md:h-40 mx-auto object-contain mb-4 transition-transform duration-300 hover:scale-105"
         />
         <h3 className='text-sm sm:text-base md:text-lg font-semibold mb-2 line-clamp-2'>
           
@@ -24,10 +24,10 @@ function ProductCard({product}) {
           
         </h3>
 
-        <p className='text-gray-600 text-sm sm:text-base mb-1'>
-          Price: ₹{product.price}
+        <p className='font-semibold text-gray-800 mb-1'>
+          ₹{product.price}
         </p>
-        <p className="text-yellow-500 text-sm mb-2">
+        <p className="text-yellow-500 text-sm mb-3 font-medium">
           ⭐ {product.rating}
         </p>
         
@@ -35,7 +35,7 @@ function ProductCard({product}) {
         
           <button 
             onClick={handleAdd}
-            className='w-1/2 bg-blue-900 text-white px-2 py-2 rounded hover:bg-blue-600 transition'
+            className='w-1/2 bg-gradient-to-r from-purple-600 to-pink-500 text-white px-3 py-2 rounded-lg hover:opacity-90 transition'
           >
             Add to Cart
           </button>
@@ -43,7 +43,7 @@ function ProductCard({product}) {
           
           <Link
             to={`/products/${product._id}`}
-            className="w-1/2 text-center border border-blue-900 text-blue-900 px-2 py-2 rounded hover:bg-blue-100 transition"
+            className="w-1/2 text-center border border-purple-500 text-purple-600 hover:bg-purple-50 px-2 py-2 rounded transition"
           >
             View Details
           </Link>

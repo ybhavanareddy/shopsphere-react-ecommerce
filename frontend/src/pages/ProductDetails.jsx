@@ -35,47 +35,55 @@ function ProductDetails() {
 
   return (
 
-  <div className="p-8 max-w-3xl mx-auto flex flex-col">
+  <div className="min-h-[80vh] flex items-center justify-center px-4">
+    <div className='w-full max-w-4xl bg-white rounded-xl shadow-md p-6 sm:p-8 flex flex-col md:flex-row gap-8'>
+    <div className="flex-1 flex justify-center items-center">
+        <img
+          src={product.thumbnail}
+          alt={product.title}
+          className="h-48 sm:h-56 md:h-64 object-contain transition-transform duration-300 hover:scale-105"
+        />
+    </div>
+    <div className='flex-1'>
 
-    <img
-      src={product.thumbnail}
-      alt={product.title}
-      className="h-60 mx-auto object-contain mb-6"
-    />
+    
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3">
+          {product.title}
+        </h1>
 
-    <h1 className="text-2xl font-bold mb-2">
-      {product.title}
-    </h1>
+        <p className="text-gray-600 mb-4">
+          Category: {product.category}
+        </p>
 
-    <p className="text-gray-600 mb-4">
-      Category: {product.category}
-    </p>
+        <p className="text-xl font-semibold text-gray-800">
+          ₹{product.price}
+        </p>
+        <p className="text-yellow-500 mb-4 font-medium">
+          ⭐ {product.rating}
+        </p>
 
-    <p className="text-lg font-semibold mb-4">
-      Price: ₹{product.price}
-    </p>
-    <p className="text-yellow-500 mb-4">
-      ⭐ {product.rating}
-    </p>
+        <p className="mb-6">
+          {product.description}
+        </p>
+      <div className="flex gap-4 mt-4">
 
-    <p className="mb-6">
-      {product.description}
-    </p>
+          <button
+            onClick={() => addToCart(product)}
+            className="flex-1 bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 rounded-lg hover:opacity-90 transition"
+          >
+            Add to Cart
+          </button>
 
-    <button
-      onClick={() => addToCart(product)}
-      className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 w-40"
-    >
-      Add to Cart
-    </button>
+          <Link 
+            to="/products"
+            className="flex-1 text-center border border-purple-500 text-purple-600 py-2 rounded-lg hover:bg-purple-50 transition flex items-center justify-center"
+          >
+            Go to Products
+          </Link>
 
-    <Link 
-        to="/products"
-        className="bg-blue-900 text-white text-center px-4 py-2 rounded hover:bg-blue-600 mb-4 w-40"
-        >
-          Go to Products
-    </Link>
-
+      </div>
+    </div>
+    </div>
   </div>
 
 );
