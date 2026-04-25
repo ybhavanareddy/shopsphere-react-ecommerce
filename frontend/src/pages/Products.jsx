@@ -98,6 +98,7 @@ const indexOfFirstProduct = indexOfLastProduct - productsPerPage
 const currentProducts = filteredProducts.slice(
   indexOfFirstProduct,indexOfLastProduct
 );
+ 
 
 const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 

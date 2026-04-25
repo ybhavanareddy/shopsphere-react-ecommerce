@@ -2,15 +2,31 @@ import Product from "../models/Product.js";
 
 //Get all products 
 
-export const getProducts = async(req,res)=> {
+export const getProducts = async (req, res) => {
+  try {
 
-     try {
-         const products = await Product.find();
-         res.json(products);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
 
-     } catch (error) {
-         res.status(500).json({message: error.message});
-     }
+    const skip = (page - 1) * limit;
+
+    const total = await Product.countDocuments();
+
+    const products = await Product.find()
+        .select("-__v -createdAt -updatedAt")
+      .skip(skip)
+      .limit(limit);
+
+    res.json({
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+      products
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 //Get single product by ID
