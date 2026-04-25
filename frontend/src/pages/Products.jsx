@@ -2,11 +2,18 @@ import { useEffect, useState, useMemo, useRef } from 'react'
 
 import ProductGrid from '../components/ProductGrid'
 import useProducts from '../hooks/useProducts';
+import useCategories from "../hooks/useCategories";
 import ProductSkeleton from '../components/ProductSkelton'
 
 
 function Products() {
-  const{products,loading,error,categories} = useProducts();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const{products,loading,error,pages} = useProducts(currentPage);
+  const {categories} = useCategories();
+
+  
 
   const [search,setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -19,8 +26,8 @@ function Products() {
 
   const inputRef = useRef(null);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 8;
+  
+ 
 
 
   useEffect(()=>{
@@ -89,18 +96,6 @@ const filteredProducts = useMemo(()=>{
 
 },[products,debouncedSearch,selectedCategory,sortOption])
   
-//Pagination Logic 
-
-const indexOfLastProduct = currentPage * productsPerPage
-
-const indexOfFirstProduct = indexOfLastProduct - productsPerPage 
-
-const currentProducts = filteredProducts.slice(
-  indexOfFirstProduct,indexOfLastProduct
-);
- 
-
-const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
 
 if (error) {
@@ -203,7 +198,7 @@ if (error) {
           
         </div>
 
-          {currentProducts.length === 0 ? (
+          {filteredProducts.length === 0 ? (
 
             <div className="text-center mt-10 text-lg font-semibold">
 
@@ -213,7 +208,7 @@ if (error) {
 
           ) : (
 
-            <ProductGrid products={currentProducts} />
+            <ProductGrid products={filteredProducts} />
 
           )}
 
@@ -225,7 +220,7 @@ if (error) {
             >
               Prev
             </button>
-            {Array.from({length: totalPages}).map((_,index)=>(
+            {Array.from({length: pages}).map((_,index)=>(
 
               <button 
                 key={index}
@@ -243,7 +238,7 @@ if (error) {
             
             <button 
             onClick={()=> setCurrentPage(currentPage+1)}
-            disabled = {currentPage === totalPages}
+            disabled = {currentPage === pages}
             className='px-4 py-1 border rounded-lg hover:bg-gray-100 disabled:opacity-50'
             >
               Next

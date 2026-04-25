@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { fetchProducts, fetchCategories } from "../services/ProductService";
 
-function useProducts(){
+function useProducts(page){
+
     const [products, setProducts] = useState([]);
-    const[loading, setLoading] = useState(true);
+    const[pages, setPages] = useState(1);
     const [error,setError] = useState(null)
-    const[categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
     
@@ -14,11 +15,11 @@ function useProducts(){
             setLoading(true);
             setError(null);
     
-            const data = await fetchProducts();
-            setProducts(data);
+            const data = await fetchProducts(page,8);
+            setProducts(data.products);
+            setPages(data.pages);
     
-            const categoryData = await fetchCategories();
-            setCategories(categoryData);
+            
     
           }catch(err){
             setError("Failed to load products")
@@ -26,11 +27,11 @@ function useProducts(){
             setLoading(false);
           }
           
-        }
+        };
         loadProducts();
-    },[]);
+    },[page]);
 
-    return {products,loading,error,categories}
+    return {products,loading,error,pages}
 }
 
 export default useProducts;
