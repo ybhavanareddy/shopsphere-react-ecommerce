@@ -9,20 +9,14 @@ import ProductSkeleton from '../components/ProductSkelton'
 function Products() {
 
   const [currentPage, setCurrentPage] = useState(1);
-  
-  const{products,loading,error,pages} = useProducts(currentPage);
-  const {categories} = useCategories();
-
-  
-
+  const[selectedCategory, setSelectedCategory] = useState("all");
   const [search,setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-
-
-  
-  const[selectedCategory, setSelectedCategory] = useState("all");
-
   const[sortOption,setSortOption]  = useState("default");
+
+  const{products,loading,error,pages} = useProducts(currentPage, selectedCategory, debouncedSearch,sortOption);
+
+  const {categories} = useCategories();
 
   const inputRef = useRef(null);
 
@@ -60,42 +54,6 @@ useEffect(()=>{
   }
 
 },[loading]);
-
-
-
-const filteredProducts = useMemo(()=>{
-      let result = products.filter((product)=> {
-
-        const matchesSearch = 
-          product.title.toLowerCase().includes(debouncedSearch.toLowerCase());
-
-        const matchesCategory = 
-          selectedCategory === "all" ||   product.category?.toLowerCase().includes(selectedCategory.toLowerCase());
-
-        return matchesSearch && matchesCategory;
-      });
-
-      if (sortOption === "price-low") {
-
-      result.sort((a, b) => a.price - b.price);
-
-    }
-
-    if (sortOption === "price-high") {
-
-      result.sort((a, b) => b.price - a.price);
-
-    }
-
-    if (sortOption === "rating") {
-
-      result.sort((a, b) => b.rating - a.rating);
-
-    }
-    return result;
-
-},[products,debouncedSearch,selectedCategory,sortOption])
-  
 
 
 if (error) {
@@ -177,7 +135,7 @@ if (error) {
               ))}
           </div>
 
-        {selectedCategory !== "all" && (
+        
           <div className='mb-4 flex flex-col sm:flex-row sm:items-center gap-2'>
             <label className='mr-2 font-semibold'>
               Sort By:
@@ -193,12 +151,12 @@ if (error) {
               <option value="rating">Rating</option>
             </select>
           </div>
-        )}
+        
 
           
         </div>
 
-          {filteredProducts.length === 0 ? (
+          {products.length === 0 ? (
 
             <div className="text-center mt-10 text-lg font-semibold">
 
@@ -208,7 +166,7 @@ if (error) {
 
           ) : (
 
-            <ProductGrid products={filteredProducts} />
+            <ProductGrid products={products} />
 
           )}
 

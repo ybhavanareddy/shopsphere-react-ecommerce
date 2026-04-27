@@ -1,7 +1,7 @@
 const BASE_URL = `${import.meta.env.VITE_API_URL}/api/products`;
 
-export async function fetchProducts(){
-  const response = await fetch(BASE_URL);
+export async function fetchProducts(page=1, limit=8, category="all", search="", sort="default"){
+  const response = await fetch(`${BASE_URL}?page=${page}&limit=${limit}&category=${category}&search=${search}&sort=${sort}`);
   const data = await response.json();
   return data;
 }

@@ -6,16 +6,42 @@ export const getProducts = async (req, res) => {
   try {
 
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 6;
+    const limit = parseInt(req.query.limit) || 8;
+    const category = req.query.category;
+    const search = req.query.search;
+    const sort = req.query.sort;
 
-    const skip = (page - 1) * limit;
+    let sortOption = {createdAt: -1};//default sorting by newest
 
-    const total = await Product.countDocuments();
+    if (sort === "price-low") {
+      sortOption.price = 1;
+    } else if (sort === "price-high") {
+        sortOption.price = -1;
+    } else if (sort === "rating") {
+        sortOption.rating = -1;
+    }
 
-    const products = await Product.find()
+    let query = {};
+
+    if (category && category !== "all"){//if category is provided and not "all", filter by category
+        query.category = category;
+    }
+
+    if (search){
+        query.title = {$regex: search, $options:"i"}; //case-insensitive search
+    }
+
+    
+
+    const skip = (page - 1) * limit;//calculate how many products to skip for pagination
+
+    const total = await Product.countDocuments(query);
+
+    const products = await Product.find(query)
         .select("-__v -createdAt -updatedAt")
-      .skip(skip)
-      .limit(limit);
+        .sort(sortOption)
+        .skip(skip)
+        .limit(limit);
 
     res.json({
       total,

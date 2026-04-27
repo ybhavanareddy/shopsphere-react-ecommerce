@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { fetchProducts, fetchCategories } from "../services/ProductService";
+import { fetchProducts } from "../services/ProductService";
 
-function useProducts(page){
+function useProducts(page, category,search, sort){
 
     const [products, setProducts] = useState([]);
     const[pages, setPages] = useState(1);
@@ -15,7 +15,7 @@ function useProducts(page){
             setLoading(true);
             setError(null);
     
-            const data = await fetchProducts(page,8);
+            const data = await fetchProducts(page,8, category, search,sort);
             setProducts(data.products);
             setPages(data.pages);
     
@@ -29,7 +29,7 @@ function useProducts(page){
           
         };
         loadProducts();
-    },[page]);
+    },[page, category, search,sort]);
 
     return {products,loading,error,pages}
 }
